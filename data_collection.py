@@ -31,7 +31,8 @@ def collect_data():
     logging.info(f"QKD key generation time: {key_time:.6f} seconds")
 
     # Step 2: Key Entropy
-    key_probs = [raw_key.count(0) / len(raw_key), raw_key.count(1) / len(raw_key)]
+    raw_key_str = ''.join(str(bit) for bit in raw_key)
+    key_probs = [raw_key_str.count('0') / len(raw_key), raw_key_str.count('0') / len(raw_key)]
     key_entropy = entropy(key_probs, base=2)
     results['qkd_key_entropy'] = key_entropy
     logging.info(f"QKD key entropy: {key_entropy:.6f} bits")
@@ -61,7 +62,7 @@ def collect_data():
 
     # Step 6: Error Rate Simulation
     noise_level = 0.1  # Simulate 10% noise in the channel
-    noisy_key = [bit if random.random() > noise_level else 1 - bit for bit in raw_key]
+    noisy_key = [int(bit) if random.random() > noise_level else 1 - int(bit) for bit in raw_key]
     error_count = sum(1 for a, b in zip(raw_key, noisy_key) if a != b)
     error_rate = error_count / len(raw_key)
     results['error_rate'] = error_rate
