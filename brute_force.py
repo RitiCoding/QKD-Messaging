@@ -52,10 +52,49 @@ def compare_brute_force(qkd_key_length, aes_key_length, quantum=False):
     print("Time to brute force QKD:", qkd_brute_force_time)
     print("Time to brute force AES:", aes_brute_force_time)
 
+def estimate_computing_power(key_length_bits, num_qubits, num_repetitions, clock_speed_ghz):
+    """
+    Estimate the computational power required to run a QKD simulation.
+
+    Parameters:
+    - key_length_bits: Length of the QKD key in bits.
+    - num_qubits: Number of qubits processed per run.
+    - num_repetitions: Number of protocol repetitions for key generation.
+    - clock_speed_ghz: Clock speed of the hardware in GHz.
+
+    Returns:
+    - total_operations: Total number of operations required.
+    - time_required_seconds: Estimated time required for simulation (in seconds).
+    """
+    # Estimate operations per key bit
+    operations_per_qubit = 1000  # Assume 1000 operations per qubit for error correction, privacy amplification, etc.
+    operations_per_bit = operations_per_qubit * num_qubits
+
+    # Total operations
+    total_operations = operations_per_bit * key_length_bits * num_repetitions
+
+    # Compute time required (assuming 1 GHz = 1 billion operations per second)
+    time_required_seconds = total_operations / (clock_speed_ghz * 1e9)
+
+    return total_operations, time_required_seconds
+
+
+def display_results(total_operations, time_required_seconds, clock_speed_ghz):
+    """
+    Display the results in a readable format.
+    """
+    print("\n--- QKD Simulation Computational Power Estimate ---")
+    print(f"Total Operations: {total_operations:.2e} operations")
+    print(f"Time Required: {time_required_seconds:.2f} seconds")
+    print(f"Hardware Clock Speed: {clock_speed_ghz} GHz")
+    print("----------------------------------------------------")
+
 # Example usage
 if __name__ == "__main__":
     # Initialize QKD simulation
-    qkd_protocol = QKDProtocol(num_qubits=1024, error_threshold=0.05)
+    num_qubits = 1024
+    error_threshold = .05
+    qkd_protocol = QKDProtocol(num_qubits, error_threshold)
 
     # Generate a key
     qkd_key = qkd_protocol.generate_key()
@@ -71,3 +110,16 @@ if __name__ == "__main__":
     print("\nQuantum Brute Force Comparison:")
     # Quantum brute force comparison (Grover's algorithm)
     compare_brute_force(qkd_key_length=qkd_key_length, aes_key_length=aes_key_length, quantum=True)
+
+    # Input parameters for the QKD simulation
+    num_repetitions = 1
+    clock_speed_ghz = 1
+
+    # Estimate computing power
+    total_operations, time_required_seconds = estimate_computing_power(
+        qkd_key_length, num_qubits, num_repetitions, clock_speed_ghz
+    )
+
+    # Display results
+    display_results(total_operations, time_required_seconds, clock_speed_ghz)
+
