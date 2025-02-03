@@ -40,9 +40,10 @@ def collect_data():
     # Step 4: Encryption Time
     aes_key = os.urandom(32)
     encryption = Encryption(aes_key)
-    data = b"This is a test message"  # Test data
-    iv, ciphertext = encryption.encrypt_message(data)  # Get both iv and ciphertext
-    _, encryption_time = measure_time(lambda: encryption.encrypt_message(data))
+    data = "This is a test message"  # Test data
+    iv = os.urandom(AES.block_size)
+    ciphertext = encryption.encrypt_message(iv, data)  # Get both iv and ciphertext
+    _, encryption_time = measure_time(lambda: encryption.encrypt_message(iv, data))
     results['encryption_time'] = encryption_time
     logging.info(f"Encryption time: {encryption_time:.6f} seconds")
 
@@ -80,7 +81,7 @@ def collect_data():
     # Step 8: AES Encryption Comparison
     aes_cipher = AES.new(aes_key, AES.MODE_CBC)
     iv = aes_cipher.iv  # Get the IV used for encryption
-    padded_data = pad(data, AES.block_size)
+    padded_data = pad(data.encode('utf-8'), AES.block_size)
 
     # Measure AES Encryption Time
     _, aes_encryption_time = measure_time(aes_cipher.encrypt, padded_data)
