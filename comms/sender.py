@@ -7,11 +7,11 @@ class Sender:
         """
         self.encryption = encryption_module
 
-    def send_message(self, message):
+    def send_message(self, iv, message):
         """
         Encrypts and sends a message over the classical channel.
         """
-        encrypted_message = self.encryption.encrypt_message(message)
+        encrypted_message = self.encryption.encrypt_message(iv, message)
         self.log_outgoing_message(message)
         return encrypted_message
 

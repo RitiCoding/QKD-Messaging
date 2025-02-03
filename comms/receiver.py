@@ -5,11 +5,11 @@ class Receiver:
         """
         self.encryption = encryption_module
 
-    def receive_message(self, encrypted_message):
+    def receive_message(self, iv, encrypted_message):
         """
         Decrypts a received message using the encryption module.
         """
-        message = self.encryption.decrypt_message(encrypted_message)
+        message = self.encryption.decrypt_message(iv, encrypted_message)
         self.log_incoming_message(message)
         return message
 

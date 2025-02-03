@@ -5,7 +5,7 @@ class KeyDerivation:
         """
         Derives a secure encryption key from the QKD key using a KDF.
         """
-        qkd_key_bytes = bytes(qkd_key)  # Convert QKD key to bytes
+        qkd_key_bytes = bytes(qkd_key, 'utf-8')  # Convert QKD key to bytes
         return pbkdf2_hmac('sha256', qkd_key_bytes, salt, 100000)
 
     def verify_key_integrity(self, key):

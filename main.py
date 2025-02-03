@@ -1,12 +1,14 @@
 import logging
 from qkd.qkd_protocol import QKDProtocol, SecurityException
 from qkd.key_management import KeyManagement
+from Crypto.Cipher import AES
 from crypto.encryption import Encryption
 from crypto.key_derivation import KeyDerivation
 from comms.sender import Sender
 from comms.receiver import Receiver
 from comms.channel import Channel
 from utils.logger import setup_logger
+import os
 
 def main():
     # Step 1: Set up logging
@@ -42,11 +44,12 @@ def main():
     receiver = Receiver(encryption_module)
 
     # Step 6: Simulate a Secure Message Transmission
+    iv = os.urandom(AES.block_size)  # Generate a random IV for CBC mode
     message = input("Enter the message to send securely: ")
-    encrypted_message = sender.send_message(message)
+    encrypted_message = sender.send_message(iv, message)
     logging.info(f"Encrypted message: {encrypted_message}")
 
-    decrypted_message = receiver.receive_message(encrypted_message)
+    decrypted_message = receiver.receive_message(iv, encrypted_message)
     logging.info(f"Decrypted message: {decrypted_message}")
 
     # Step 7: Display results

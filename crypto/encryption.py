@@ -12,14 +12,13 @@ class Encryption:
             raise ValueError("AES key must be either 16, 24, or 32 bytes long.")
         self.key = key
 
-    def encrypt_message(self, data):
+    def encrypt_message(self, iv, data):
         """
         Encrypts the plaintext using AES encryption in CBC mode.
         """
-        iv = os.urandom(AES.block_size)  # Generate a random IV for CBC mode
         cipher = AES.new(self.key, AES.MODE_CBC, iv)
-        ciphertext = cipher.encrypt(pad(data, AES.block_size))  # Pad the data to block size and encrypt
-        return iv, ciphertext  # Return both IV and ciphertext
+        ciphertext = cipher.encrypt(pad(data.encode('utf-8'), AES.block_size))  # Pad the data to block size and encrypt
+        return ciphertext  # Return both IV and ciphertext
 
     def decrypt_message(self, iv, ciphertext):
         """
