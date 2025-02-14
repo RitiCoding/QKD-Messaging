@@ -1,0 +1,45 @@
+FUNCTION MAP
+
+1. measure_time(func, *args, **kwargs)
+   - Measures the execution time of a function.
+   - Returns the function result and elapsed time.
+
+2. collect_data()
+   - Runs various cryptographic tests and collects performance metrics.
+   - Steps:
+     - Generates a QKD key and measures time.
+     - Computes key entropy.
+     - Encrypts and decrypts data with AES and measures time.
+     - Simulates bandwidth overhead.
+     - Simulates error rate with noise.
+     - Detects eavesdropping attempts.
+     - Compares AES encryption times.
+   - Returns collected data.
+
+3. brute_force_time(key_length, quantum=True, classical_speed=1e9)
+   - Estimates brute force time for a key based on classical or quantum computing.
+   - Returns estimated time in seconds.
+
+4. display_time(seconds)
+   - Converts time in seconds into a human-readable format.
+   - Returns formatted time string.
+
+5. compare_brute_force(qkd_key_length, aes_key_length, quantum=False)
+   - Compares brute force times for QKD and AES keys.
+   - Prints a formatted comparison.
+
+6. estimate_computing_power(key_length_bits, num_qubits, num_repetitions, clock_speed_ghz)
+   - Estimates computational power required for QKD simulation.
+   - Returns total operations and estimated time in seconds.
+
+7. display_results(total_operations, time_required_seconds, clock_speed_ghz)
+   - Displays the QKD simulation results in a readable format.
+
+8. __main__
+   - Executes the following:
+     - Runs collect_data() to gather performance metrics.
+     - Initializes QKD simulation.
+     - Generates QKD key and measures length.
+     - Compares classical and quantum brute force times.
+     - Estimates computing power required for QKD.
+     - Displays results.
