@@ -25,7 +25,7 @@ def main():
     # Step 3: Perform Quantum Key Distribution
     try:
         logging.info("Performing Quantum Key Distribution...")
-        raw_key = qkd.generate_key()
+        raw_key = qkd.run_protocol()
         logging.info(f"Raw key generated: {raw_key}")
     except SecurityException as e:
         logging.error(f"Snooping detected! Aborting communication: {e}")

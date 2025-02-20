@@ -1,3 +1,5 @@
+import random
+
 class Channel:
     def simulate_quantum_channel(self, qubits):
         """

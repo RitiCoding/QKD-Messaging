@@ -1,4 +1,5 @@
 from hashlib import pbkdf2_hmac
+import os
 
 class KeyDerivation:
     def derive_key(self, qkd_key, salt):

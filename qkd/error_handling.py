@@ -1,3 +1,5 @@
+from qkd.qkd_protocol import SecurityException
+
 class ErrorHandling:
     def error_reconciliation(self, key):
         """
