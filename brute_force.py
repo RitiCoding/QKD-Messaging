@@ -97,7 +97,7 @@ if __name__ == "__main__":
     qkd_protocol = QKDProtocol(num_qubits, error_threshold)
 
     # Generate a key
-    qkd_key = qkd_protocol.generate_key()
+    qkd_key = qkd_protocol.run_protocol()
     qkd_key_length = len(qkd_key)
 
     # AES key length (e.g., AES-256)

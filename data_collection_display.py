@@ -61,14 +61,6 @@ def collect_data():
     logging.info(f"Qubits transmitted: {qubit_count}")
     logging.info(f"Reconciliation data size: {reconciliation_data_size} bytes")
 
-    # Step 6: Error Rate Simulation
-    noise_level = 0.1  # Simulate 10% noise in the channel
-    noisy_key = [bit if random.random() > noise_level else 1 - bit for bit in raw_key]
-    error_count = sum(1 for a, b in zip(raw_key, noisy_key) if a != b)
-    error_rate = error_count / len(raw_key)
-    results['error_rate'] = error_rate
-    logging.info(f"Error rate with {noise_level * 100}% noise: {error_rate:.6f}")
-
     # Step 7: Eavesdropping Detection Test
     try:
         qkd_protocol.simulate_eavesdropping(noise_level)  # Assuming this simulates and detects snooping
